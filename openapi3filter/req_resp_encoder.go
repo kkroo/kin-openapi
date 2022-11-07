@@ -21,3 +21,13 @@ type bodyEncoder func(body interface{}) ([]byte, error)
 var bodyEncoders = map[string]bodyEncoder{
 	"application/json": json.Marshal,
 }
+
+func RegisterBodyEncoder(contentType string, encoder bodyEncoder) {
+	if contentType == "" {
+		panic("contentType is empty")
+	}
+	if encoder == nil {
+		panic("decoder is not defined")
+	}
+	bodyEncoders[contentType] = encoder
+}
